@@ -1,211 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Raquel Maciel Reis — Neuropsicopedagoga Clínica e Institucional</title>
-  <meta name="description" content="Neuropsicopedagogia clínica e institucional: avaliação, intervenção e acompanhamento para dificuldades de aprendizagem, TEA, TDAH e Dislexia. Atendimento 8h–20h." />
+  <meta name="description"
+    content="Neuropsicopedagogia clínica e institucional: avaliação, intervenção e acompanhamento para dificuldades de aprendizagem, TEA, TDAH e Dislexia. Atendimento 8h–20h." />
   <meta name="theme-color" content="#6a7cf7" />
+
+  <link rel="stylesheet" href="main.css">
+  <link rel="icon" type="image/x-icon" href="Assets/Logo.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
-  <style>
-    :root{
-      --bg: #0b0e14;
-      --panel: #121826;
-      --muted: #9aa4b2;
-      --text: #e5e7eb;
-      --brand: #6a7cf7;
-      --brand-2: #86efac;
-      --accent: #f59e0b;
-      --danger: #ef4444;
-      --ok: #10b981;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 18px;
-      --radius-sm: 12px;
-      --radius-lg: 28px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text); background:radial-gradient(1200px 700px at 10% -10%, #19223a 0, transparent 60%),
-      radial-gradient(900px 600px at 110% -20%, #1b2a42 0, transparent 60%),
-      radial-gradient(1000px 600px at 50% 120%, #111827 0, #0b0e14 60%);
-      line-height:1.65;
-    }
-    a{color:var(--brand); text-decoration:none}
-    a:hover{opacity:.9}
-    .container{width:min(1120px, 92vw); margin-inline:auto}
-
-    /* ========== OVERLAY LOGIN ========== */
-    #login-overlay{
-      position:fixed; inset:0; background:#0b0e14; display:flex; align-items:center; justify-content:center; z-index:200;
-    }
-    #login-box{
-      background:#121826; padding:24px; border-radius:var(--radius); box-shadow:var(--shadow); width:min(380px,90%);
-    }
-    #login-box h2{margin-top:0}
-    .form{display:grid; gap:12px}
-    .input{width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0b1220; color:var(--text)}
-    .btn{padding:10px 14px; border-radius:10px; border:0; cursor:pointer; font-weight:600}
-    .btn-primary{background:var(--brand); color:#fff}
-    .btn-ghost{background:transparent; border:1px solid rgba(255,255,255,.3); color:var(--text)}
-    .toggle-pass{position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer}
-    .strength{font-size:.85rem; margin-top:-6px}
-
-    /* NAV */
-    .nav{
-      position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(12px);
-      background:linear-gradient(180deg, rgba(10,12,20,.85), rgba(10,12,20,.6));
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
-    .brand{display:flex; gap:12px; align-items:center}
-    .logo{width:40px; height:40px; border-radius:12px; background: conic-gradient(from 210deg,#6a7cf7,#86efac,#6a7cf7); box-shadow: var(--shadow)}
-    .brand h1{font-size:1.05rem; margin:0; letter-spacing:.3px}
-    .brand small{display:block; color:var(--muted); font-weight:500; margin-top:-2px}
-    .nav a{color:var(--text)}
-    .nav-menu{display:flex; gap:18px; align-items:center}
-    .nav-menu a{opacity:.85}
-    .cta{background:linear-gradient(135deg, var(--brand), #5eead4); color:#0b0e14; padding:10px 14px; border-radius:12px; font-weight:700}
-    .cta:hover{transform:translateY(-1px)}
-    .ghost{padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12)}
-
-    /* HERO */
-    .hero{padding:56px 0 24px}
-    .hero .wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:28px; align-items:center}
-    .hero h2{font-size:clamp(1.6rem, 3.4vw, 3rem); margin:.3rem 0 .5rem; line-height:1.15}
-    .hero p.lead{color:var(--muted); font-size:1.05rem}
-    .pill{display:inline-flex; gap:10px; align-items:center; padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.12); color:var(--muted)}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.1); padding:22px; border-radius:var(--radius); box-shadow:var(--shadow)}
-    .badges{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0}
-    .badge{background:rgba(134,239,172,.08); color:#bbf7d0; border:1px solid rgba(134,239,172,.35); padding:8px 12px; border-radius:999px; font-size:.9rem}
-    .grid-3{display:grid; gap:14px; grid-template-columns:repeat(3,1fr)}
-    .kpi{background:#0d1320; border:1px solid rgba(255,255,255,.08); padding:18px; border-radius:16px}
-    .kpi b{font-size:1.4rem}
-
-    /* SECTIONS */
-    section{padding:64px 0}
-    .section-title{font-size:1.5rem; margin:0 0 8px}
-    .section-sub{color:var(--muted); margin:0 0 24px}
-    .panel{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
-    .split{display:grid; grid-template-columns: 1fr 1fr; gap:22px}
-
-    /* SERVICES */
-    .cards{display:grid; gap:16px; grid-template-columns:repeat(3,1fr)}
-    .card{padding:18px; border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,.08); background:#0e1524}
-    .card h3{margin:.2rem 0 .2rem}
-    .chip{display:inline-block; font-size:.8rem; color:#cbd5e1; border:1px solid rgba(255,255,255,.14); padding:6px 10px; border-radius:999px}
-
-    /* PROCESS */
-    .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
-    .step{padding:18px; border:1px dashed rgba(255,255,255,.2); border-radius:14px}
-    .step .n{display:inline-grid; place-items:center; width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--brand),#5eead4); color:#0b0e14; font-weight:900; margin-bottom:8px}
-
-    /* TESTIMONIALS */
-    .slider{position:relative}
-    .slides{display:flex; overflow:hidden; scroll-snap-type:x mandatory; gap:16px}
-    .slide{scroll-snap-align:center; min-width: calc(50% - 8px); background:#0e1524; padding:18px; border-radius:18px; border:1px solid rgba(255,255,255,.08)}
-    .slide p{margin:.2rem 0}
-    .slide cite{color:var(--muted); font-style:normal; font-size:.95rem}
-
-    /* FAQ */
-    details{background:#0e1524; border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px 14px}
-    details+details{margin-top:10px}
-    summary{cursor:pointer; font-weight:600}
-
-    /* CONTACT */
-    .contact-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:18px}
-    .form{display:grid; gap:12px}
-    .input, textarea, select{width:100%; padding:12px 14px; border-radius:12px; background:#0b1220; border:1px solid rgba(255,255,255,.12); color:var(--text)}
-    textarea{min-height:120px}
-    .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; border:0; padding:12px 16px; border-radius:12px; font-weight:800; cursor:pointer}
-    .btn-primary{background:linear-gradient(135deg, var(--brand), #5eead4); color:#0b0e14}
-    .btn-ghost{background:transparent; border:1px solid rgba(255,255,255,.18); color:var(--text)}
-
-    /* FOOTER */
-    footer{padding:32px 0; border-top:1px solid rgba(255,255,255,.06); color:#cbd5e1}
-    .foot-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:18px}
-    .copyright{border-top:1px solid rgba(255,255,255,.08); margin-top:18px; padding-top:12px; color:var(--muted)}
-
-    /* MODAL */
-    .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(5,7,12,.6); z-index:60}
-    .modal.open{display:grid}
-    .modal-panel{width:min(520px, 92vw); background:#0e1524; border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:18px; box-shadow:var(--shadow)}
-
-    /* UTIL */
-    .muted{color:var(--muted)}
-    .center{text-align:center}
-    .mt-2{margin-top:8px}
-    .mt-3{margin-top:12px}
-    .mt-4{margin-top:16px}
-    .mt-6{margin-top:24px}
-
-    /* RESPONSIVE */
-    @media (max-width: 980px){
-      .hero .wrap, .contact-grid, .split{grid-template-columns:1fr}
-      .steps{grid-template-columns:repeat(2,1fr)}
-      .cards{grid-template-columns:1fr 1fr}
-      .slides .slide{min-width:100%}
-    }
-    @media (max-width: 640px){
-      .nav-menu{display:none}
-      .cards{grid-template-columns:1fr}
-      .steps{grid-template-columns:1fr}
-    }
-  </style>
 </head>
-<body>
-  <!-- ========== OVERLAY LOGIN OBRIGATÓRIO ========== -->
-  <div id="login-overlay">
-    <div id="login-box">
-      <h2 id="form-title">Login</h2>
-      <form id="auth-form" class="form">
-        <label>Email</label>
-        <input id="auth-email" type="email" class="input" required>
-        <label>Senha</label>
-        <div style="position:relative">
-          <input id="auth-pass" type="password" class="input" minlength="6" required>
-          <span class="toggle-pass" onclick="togglePass('auth-pass',this)">👁</span>
-        </div>
-        <div id="strength" class="strength"></div>
-        <div id="confirm-wrap" style="display:none">
-          <label>Confirmar senha</label>
-          <div style="position:relative">
-            <input id="auth-pass2" type="password" class="input" minlength="6">
-            <span class="toggle-pass" onclick="togglePass('auth-pass2',this)">👁</span>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary" id="submit-btn">Entrar</button>
-        <button type="button" class="btn btn-ghost" onclick="switchMode()">Criar conta</button>
-      </form>
-    </div>
-  </div>
 
+<body>
   <!-- ========== SITE COMPLETO ========== -->
   <!-- NAV -->
   <nav class="nav" aria-label="Navegação principal">
     <div class="container nav-inner">
       <a class="brand" href="#home" aria-label="Página inicial">
-        <span class="logo" aria-hidden="true"></span>
+        <span class="logo" aria-hidden="true"><image src="Assets/Logo.jpg" class="logoimage"></image></span>
         <span>
           <h1>Raquel Maciel Reis</h1>
           <small>Neuropsicopedagoga Clínica e Institucional</small>
         </span>
       </a>
+
       <div class="nav-menu" role="navigation">
         <a href="#sobre">Sobre</a>
         <a href="#servicos">Serviços</a>
-        <a href="#processo">Como funciona</a>
+        <a href="#processo">Funcionamento</a>
         <a href="#depoimentos">Depoimentos</a>
         <a href="#faq">Dúvidas</a>
         <a href="#contato">Contato</a>
-        <a class="ghost" href="#login" onclick="showLoginOverlay()">Login</a>
-        <a class="cta" href="#agendar" data-scroll="#contato">Agendar consulta</a>
+        <a class="ghost" href="login.html" onclick="">Login</a>
+        <a class="cta" href="#contato" data-scroll="#contato">Agendar consulta</a>
       </div>
+
     </div>
   </nav>
 
@@ -213,48 +50,65 @@
   <header id="home" class="hero">
     <div class="container wrap">
       <div>
+        <h1 class="intervention">Intervenção em</h1>
         <span class="pill" aria-label="áreas de intervenção">
-          <span>Intervenção em</span>
-          <strong>Leitura</strong> · <strong>Escrita</strong> · <strong>Interpretação</strong> · <strong>Raciocínio Lógico</strong> · <strong>Memória</strong>
+          
+          <strong>Leitura</strong> · <strong>Escrita</strong> · <strong>Interpretação</strong> · <strong>Raciocínio
+            Lógico</strong> · <strong>Memória</strong>
         </span>
+
         <h2>Transformando desafios em conquistas no aprendizado</h2>
-        <p class="lead">Avaliação personalizada, acompanhamento contínuo e resultados comprovados para crianças e adolescentes, com foco em TEA, TDAH e Dislexia.</p>
+        <p class="lead">Avaliação personalizada, acompanhamento contínuo e resultados comprovados para crianças e
+          adolescentes, com foco em TEA, TDAH e Dislexia.</p>
+
         <div class="badges" aria-label="destaques">
           <span class="badge">Avaliação personalizada</span>
           <span class="badge">Acompanhamento contínuo</span>
           <span class="badge">Resultados comprovados</span>
         </div>
+
         <div class="mt-3">
           <a class="btn btn-primary" href="#contato" data-scroll="#contato">Agendar consulta</a>
           <a class="btn btn-ghost" href="#sobre">Conheça o trabalho</a>
         </div>
       </div>
+
       <div class="hero-card" aria-label="Chamada para ação">
         <h3 class="mt-0">Você conhece alguém com essas dificuldades?</h3>
         <p class="muted">Basta marcar um horário. Após a avaliação, daremos início à intervenção.</p>
+
         <div class="grid-3 mt-3">
           <div class="kpi"><b>+120</b><br><span class="muted">famílias atendidas</span></div>
           <div class="kpi"><b>8h–20h</b><br><span class="muted">horário de atendimento</span></div>
           <div class="kpi"><b>TEA · TDAH · Dislexia</b><br><span class="muted">foco clínico</span></div>
         </div>
+
         <div class="mt-3">
-          <a class="btn btn-primary" href="https://wa.me/5511976241930" target="_blank" rel="noopener">Falar no WhatsApp</a>
+          <a class="btn btn-primary" href="https://wa.me/5511976241930" target="_blank" rel="noopener">Falar no
+            WhatsApp</a>
           <a class="btn btn-ghost" href="#contato" data-scroll="#contato">Enviar mensagem</a>
         </div>
       </div>
+
     </div>
   </header>
 
   <!-- SOBRE -->
   <section id="sobre">
     <div class="container split">
+
       <div>
         <h2 class="section-title">Sobre a profissional</h2>
         <p class="section-sub">Atuação clínica e institucional com base na neurociência, pedagogia e psicologia.</p>
         <div class="panel" style="padding:18px">
-          <p>Raquel Maciel Reis é especialista em educação e desenvolvimento cognitivo, com foco em alfabetização e letramento. Seu trabalho se destaca no atendimento a indivíduos com <strong>Transtorno do Espectro Autista (TEA)</strong>, <strong>Transtorno do Déficit de Atenção com Hiperatividade (TDAH)</strong> e <strong>Dislexia</strong>. Utilizando estratégias personalizadas, promove o desenvolvimento de leitura, escrita, atenção, memória e outras funções executivas, favorecendo um aprendizado eficaz e inclusivo.</p>
+          <p>Raquel Maciel Reis é especialista em educação e desenvolvimento cognitivo, com foco em alfabetização e
+            letramento. Seu trabalho se destaca no atendimento a indivíduos com <strong>Transtorno do Espectro Autista
+              (TEA)</strong>, <strong>Transtorno do Déficit de Atenção com Hiperatividade (TDAH)</strong> e
+            <strong>Dislexia</strong>. Utilizando estratégias personalizadas, promove o desenvolvimento de leitura,
+            escrita, atenção, memória e outras funções executivas, favorecendo um aprendizado eficaz e inclusivo.</p>
         </div>
       </div>
+
       <div class="panel" style="padding:18px">
         <h3>Áreas de intervenção</h3>
         <ul>
@@ -271,6 +125,7 @@
           <li>Orientação a pais e professores</li>
         </ul>
       </div>
+
     </div>
   </section>
 
@@ -280,22 +135,28 @@
       <h2 class="section-title">Serviços</h2>
       <p class="section-sub">Avaliação, intervenção e acompanhamento em neuropsicopedagogia.</p>
       <div class="cards">
+
         <article class="card">
           <span class="chip">Avaliação</span>
           <h3>Avaliação Neuropsicopedagógica</h3>
-          <p class="muted">Entrevista inicial, anamnese, aplicação de instrumentos e devolutiva com plano individualizado.</p>
+          <p class="muted">Entrevista inicial, anamnese, aplicação de instrumentos e devolutiva com plano
+            individualizado.</p>
         </article>
+
         <article class="card">
           <span class="chip">Intervenção</span>
           <h3>Atendimentos semanais</h3>
-          <p class="muted">Sessões focadas em habilidades de leitura, escrita, atenção, memória e funções executivas.</p>
+          <p class="muted">Sessões focadas em habilidades de leitura, escrita, atenção, memória e funções executivas.
+          </p>
         </article>
+
         <article class="card">
           <span class="chip">Acompanhamento</span>
           <h3>Suporte família-escola</h3>
           <p class="muted">Orientações práticas, relatórios de progresso e reuniões com a escola quando necessário.</p>
         </article>
       </div>
+
     </div>
   </section>
 
@@ -305,28 +166,47 @@
       <h2 class="section-title">Como funciona</h2>
       <p class="section-sub">Da primeira conversa ao acompanhamento de resultados.</p>
       <div class="steps">
-        <div class="step"><div class="n">1</div><b>Triagem</b><p class="muted">Coleta de informações e definição da demanda.</p></div>
-        <div class="step"><div class="n">2</div><b>Avaliação</b><p class="muted">Aplicação de instrumentos e observações clínicas.</p></div>
-        <div class="step"><div class="n">3</div><b>Plano</b><p class="muted">Elaboração do plano terapêutico individualizado.</p></div>
-        <div class="step"><div class="n">4</div><b>Intervenção</b><p class="muted">Sessões semanais e feedbacks periódicos.</p></div>
+
+        <div class="step">
+          <div class="n">1</div><b>Triagem</b>
+          <p class="muted">Coleta de informações e definição da demanda.</p>
+        </div>
+
+        <div class="step">
+          <div class="n">2</div><b>Avaliação</b>
+          <p class="muted">Aplicação de instrumentos e observações clínicas.</p>
+        </div>
+
+        <div class="step">
+          <div class="n">3</div><b>Plano</b>
+          <p class="muted">Elaboração do plano terapêutico individualizado.</p>
+        </div>
+
+        <div class="step">
+          <div class="n">4</div><b>Intervenção</b>
+          <p class="muted">Sessões semanais e feedbacks periódicos.</p>
+        </div>
+
       </div>
+
     </div>
   </section>
 
   <!-- DEPOIMENTOS -->
   <section id="depoimentos">
     <div class="container">
-      <h2 class="section-title">Depoimentos</h2>
+      <h2 class="section-title">Depoimentos (exemplos por enquanto)</h2>
       <p class="section-sub">O que famílias e educadores dizem do trabalho.</p>
       <div class="slider">
         <div class="slides" id="slides" tabindex="0" aria-label="Carrossel de depoimentos">
           <figure class="slide">
-            <p>“A evolução da leitura do meu filho foi nítida em poucos meses. O suporte à escola fez toda a diferença.”</p>
+            <p>“A evolução da leitura do meu filho foi nítida em poucos meses. O suporte à escola fez toda a diferença.”
+            </p>
             <cite>— Mãe do L., 8 anos</cite>
           </figure>
           <figure class="slide">
             <p>“Relatórios claros e práticos para ajustar nossas estratégias em sala. Parceria excelente.”</p>
-            <cite>— Prof. de 3º ano</cite>
+            <cite>— Prof. do 3º ano</cite>
           </figure>
           <figure class="slide">
             <p>“Aprendizado ficou mais leve. Hoje ele lê por prazer!”</p>
@@ -349,7 +229,8 @@
           </details>
           <details>
             <summary>Como é feita a avaliação?</summary>
-            <p>Por meio de entrevista, anamnese, aplicação de instrumentos e observação comportamental, culminando em devolutiva e plano de intervenção.</p>
+            <p>Por meio de entrevista, anamnese, aplicação de instrumentos e observação comportamental, culminando em
+              devolutiva e plano de intervenção.</p>
           </details>
           <details>
             <summary>Acompanha a escola?</summary>
@@ -394,7 +275,8 @@
           <div class="split">
             <div>
               <label for="telefone">Telefone/WhatsApp</label>
-              <input id="telefone" name="telefone" class="input" inputmode="tel" placeholder="(11) 97624-1930" required />
+              <input id="telefone" name="telefone" class="input" inputmode="tel" placeholder="(11) 97624-1930"
+                required />
             </div>
             <div>
               <label for="assunto">Assunto</label>
@@ -408,7 +290,8 @@
           </div>
           <div>
             <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" placeholder="Conte um pouco sobre sua necessidade" required></textarea>
+            <textarea id="mensagem" name="mensagem" placeholder="Conte um pouco sobre sua necessidade"
+              required></textarea>
           </div>
           <div class="split">
             <div>
@@ -440,7 +323,9 @@
             <p class="muted">Atendimento presencial (endereço sob consulta) e/ou online conforme disponibilidade.</p>
             <div class="panel" style="padding:0; overflow:hidden; border-radius:12px">
               <!-- Mapa incorporado (substitua pela sua localização) -->
-              <iframe title="Mapa" src="https://www.openstreetmap.org/export/embed.html?bbox=-46.693%2C-23.57%2C-46.63%2C-23.52&layer=mapnik" style="width:100%; height:220px; border:0"></iframe>
+              <iframe title="Mapa"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-46.693%2C-23.57%2C-46.63%2C-23.52&layer=mapnik"
+                style="width:100%; height:220px; border:0"></iframe>
             </div>
           </div>
         </aside>
@@ -462,10 +347,13 @@
         </div>
         <div>
           <b>Contato</b>
-          <p class="muted"><a href="mailto:xzquel@gmail.com">xzquel@gmail.com</a><br><a href="tel:+5511976241930">(11) 97624-1930</a></p>
+          <p class="muted"><a href="mailto:xzquel@gmail.com">xzquel@gmail.com</a><br><a href="tel:+5511976241930">(11)
+              97624-1930</a></p>
         </div>
       </div>
-      <div class="copyright">© <span id="year"></span> Raquel Maciel Reis — Todos os direitos reservados · <a href="#" onclick="alert('Política de Privacidade: seus dados são usados apenas para retorno de contato.')">Privacidade</a></div>
+      <div class="copyright">© <span id="year"></span> Raquel Maciel Reis — Todos os direitos reservados · <a href="privacidade.html"
+          onclick="alert('Política de Privacidade: seus dados são usados apenas para retorno de contato.')">Privacidade</a>
+      </div>
     </div>
   </footer>
 
@@ -480,87 +368,87 @@
     const pass = document.getElementById('auth-pass');
     const strength = document.getElementById('strength');
 
-    function togglePass(id, el){
-      const input=document.getElementById(id);
-      input.type = input.type==='password'?'text':'password';
-      el.textContent = input.type==='password'?'👁':'🙈';
+    function togglePass(id, el) {
+      const input = document.getElementById(id);
+      input.type = input.type === 'password' ? 'text' : 'password';
+      el.textContent = input.type === 'password' ? '👁' : '🙈';
     }
-    
-    function switchMode(){
-      creating=!creating;
-      title.textContent = creating? "Criar conta":"Login";
-      confirmWrap.style.display = creating? "block":"none";
-      submitBtn.textContent = creating? "Cadastrar":"Entrar";
+
+    function switchMode() {
+      creating = !creating;
+      title.textContent = creating ? "Criar conta" : "Login";
+      confirmWrap.style.display = creating ? "block" : "none";
+      submitBtn.textContent = creating ? "Cadastrar" : "Entrar";
     }
-    
+
     function showLoginOverlay(createMode = false) {
       creating = createMode;
-      title.textContent = creating? "Criar conta":"Login";
-      confirmWrap.style.display = creating? "block":"none";
-      submitBtn.textContent = creating? "Cadastrar":"Entrar";
+      title.textContent = creating ? "Criar conta" : "Login";
+      confirmWrap.style.display = creating ? "block" : "none";
+      submitBtn.textContent = creating ? "Cadastrar" : "Entrar";
       overlay.style.display = "flex";
     }
-    
-    pass.addEventListener('input',()=>{
-      const v=pass.value;
-      let msg="",color="";
-      if(v.length<6){msg="Fraca";color="var(--danger)"}
-      else if(/[A-Z]/.test(v)&&/[0-9]/.test(v)&&/[^A-Za-z0-9]/.test(v)){msg="Forte";color="var(--ok)"}
-      else{msg="Média";color="var(--accent)"}
-      strength.textContent="Senha: "+msg;
-      strength.style.color=color;
+
+    pass.addEventListener('input', () => {
+      const v = pass.value;
+      let msg = "", color = "";
+      if (v.length < 6) { msg = "Fraca"; color = "var(--danger)" }
+      else if (/[A-Z]/.test(v) && /[0-9]/.test(v) && /[^A-Za-z0-9]/.test(v)) { msg = "Forte"; color = "var(--ok)" }
+      else { msg = "Média"; color = "var(--accent)" }
+      strength.textContent = "Senha: " + msg;
+      strength.style.color = color;
     });
-    
-    form.addEventListener('submit',(e)=>{
+
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if(creating){
-        if(pass.value!==document.getElementById('auth-pass2').value){
-          alert("As senhas não coincidem.");return;
+      if (creating) {
+        if (pass.value !== document.getElementById('auth-pass2').value) {
+          alert("As senhas não coincidem."); return;
         }
         alert("Conta criada (simulação).");
-      }else{
+      } else {
         alert("Login efetuado (simulação).");
       }
-      overlay.style.display="none";
+      overlay.style.display = "none";
     });
 
     // Utilidades
-    const $ = (q, el=document) => el.querySelector(q);
-    const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
+    const $ = (q, el = document) => el.querySelector(q);
+    const $$ = (q, el = document) => Array.from(el.querySelectorAll(q));
 
     // Ano dinâmico
     $('#year').textContent = new Date().getFullYear();
 
     // Smooth scroll
-    $$('[data-scroll]').forEach(a=>{
-      a.addEventListener('click', e=>{
+    $$('[data-scroll]').forEach(a => {
+      a.addEventListener('click', e => {
         e.preventDefault();
         const id = a.getAttribute('data-scroll');
         const target = document.querySelector(id);
-        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       })
     })
 
     // Slider (depoimentos) - arraste no touch
     const slides = $('#slides');
     let isDown = false, startX, scrollLeft;
-    slides.addEventListener('mousedown', (e)=>{isDown=true; startX=e.pageX - slides.offsetLeft; scrollLeft=slides.scrollLeft});
-    slides.addEventListener('mouseleave', ()=> isDown=false);
-    slides.addEventListener('mouseup', ()=> isDown=false);
-    slides.addEventListener('mousemove', (e)=>{ if(!isDown) return; e.preventDefault(); const x=e.pageX - slides.offsetLeft; const walk=(x-startX)*2; slides.scrollLeft = scrollLeft - walk; });
+    slides.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - slides.offsetLeft; scrollLeft = slides.scrollLeft });
+    slides.addEventListener('mouseleave', () => isDown = false);
+    slides.addEventListener('mouseup', () => isDown = false);
+    slides.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - slides.offsetLeft; const walk = (x - startX) * 2; slides.scrollLeft = scrollLeft - walk; });
 
     // Formulário (validação fake)
     const contactForm = $('#form');
-    contactForm.addEventListener('submit', (e)=>{
+    contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(contactForm).entries());
-      const msg = `Obrigado, ${data.nome.split(' ')[0] || '!' }! Em breve entraremos em contato pelo email ${data.email}.`;
+      const msg = `Obrigado, ${data.nome.split(' ')[0] || '!'}! Em breve entraremos em contato pelo email ${data.email}.`;
       $('#msg').textContent = msg;
       contactForm.reset();
     });
   </script>
 
-  <!-- SEO / Schema.org -->
+  <!-- SEO / Schema.org (por enquanto nada demais aqui) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -581,4 +469,5 @@
   }
   </script>
 </body>
+
 </html>
