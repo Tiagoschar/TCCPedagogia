@@ -560,3 +560,44 @@ footer {
         grid-template-columns: 1fr
     }
 }
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  padding: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-link {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--text);
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.nav-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.table th,
+.table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  text-align: left;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
