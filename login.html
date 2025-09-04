@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neuropsicopedagoga Raquel Maciel Reis - Login</title>
-    <link rel="stylesheet" href="main.css">  
-   <link rel="icon" type="image/x-icon" href="Assets/Logo.jpg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuropsicopedagoga Raquel Maciel Reis - Login</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="icon" type="image/x-icon" href="Assets/Logo.jpg">
 </head>
 
 <body>
-      <div id="login-overlay">
+  <div id="login-overlay">
     <div id="login-box">
       <h2 id="form-title">Login</h2>
 
@@ -35,11 +35,25 @@
         </div>
 
         <a href="index.html" class="btn btn-primary">Entrar</button></a>
-        <button type="button" class="btn btn-ghost" onclick="switchMode()">Criar conta</button>
+        <a href="criarconta.html" class="btn btn-ghost">Criar conta</button>
       </form>
 
     </div>
   </div>
+
+  <script>
+    function togglePass(inputId, el) {
+      const input = document.getElementById(inputId);
+      if (input.type === "password") {
+        input.type = "text";
+        el.textContent = "🕳";
+      } else {
+        input.type = "password";
+        el.textContent = "👁";
+      }
+    }
+  </script>
+
 </body>
 
 </html>
