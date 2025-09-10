@@ -62,7 +62,13 @@ a:hover {
 
 }
 
-
+.foto-perfil{
+  width: 500px;
+  height: 500px;
+  border-radius: 5%;
+  object-fit: cover;
+object-position: 50% 30%;
+  }
 
 /* ========== OVERLAY LOGIN ========== */
 #login-overlay {
