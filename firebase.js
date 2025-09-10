@@ -1,4 +1,4 @@
-// Seu objeto firebaseConfig (copiado do console do Firebase)
+// firebaseConfig (copiado do console do Firebase)
 const firebaseConfig = {
     apiKey: "AIzaSyDvMSEl-3Tj5IvC5cs09DY8xZuUve4NyOU",
     authDomain: "tccneuropsicopedagoga.firebaseapp.com",
@@ -9,13 +9,13 @@ const firebaseConfig = {
     measurementId: "G-XR0LJT1KB8"
 };
 
-// Inicialize o Firebase (o objeto 'firebase' é global agora)
+// Inicialização do Firebase (o objeto 'firebase' é global agora)
 const app = firebase.initializeApp(firebaseConfig);
 
-// Obtenha o serviço de autenticação
+// pegar serviço de autenticação
 const auth = firebase.auth(); // Acessando o serviço de autenticação via o objeto global 'firebase'
 
-// Obtenha o serviço de banco de dados (ex: Cloud Firestore)
+// pegar serviço de banco de dados (ex: Cloud Firestore)
 const db = firebase.firestore(); // Acessando o serviço de Firestore
 
 // --- Referências aos elementos HTML para controle de UI ---
@@ -25,6 +25,9 @@ const createAccountForm = document.getElementById('create-account-form');
 const authControlsLoggedOut = document.getElementById('auth-controls-logged-out');
 const authControlsLoggedIn = document.getElementById('auth-controls-logged-in');
 const userEmailDisplay = document.getElementById('user-email-display');
+
+// NOVO: Referência para o botão de autenticação no cabeçalho
+const authNavButton = document.getElementById('auth-nav-button');
 
 // --- Funções de controle do Overlay de Login/Criação de Conta ---
 function openOverlay() {
@@ -49,12 +52,11 @@ function showLogin() {
 
 // --- Funções de Autenticação ---
 
-// Função para registrar com E-mail e Senha (chamada pelo onclick do botão)
 async function signUpEmailPassword() {
   const email = document.getElementById('user-email-signup').value;
   const password = document.getElementById('user-pass-signup').value;
   const passwordConfirm = document.getElementById('user-pass2-signup').value;
-  const userName = document.getElementById('user-name').value; // Para pegar o nome do usuário
+  const userName = document.getElementById('user-name').value;
 
   if (password !== passwordConfirm) {
     alert('As senhas não coincidem!');
@@ -63,21 +65,17 @@ async function signUpEmailPassword() {
 
   try {
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-    // Adicionar displayName ao usuário (se necessário)
     await userCredential.user.updateProfile({
         displayName: userName
     });
     console.log('Usuário registrado com sucesso:', userCredential.user);
-    closeLogin(); // Fecha o overlay após o registro bem-sucedido
-    // Você pode adicionar informações adicionais do usuário no Firestore aqui, se precisar
-    // Por exemplo: db.collection('users').doc(userCredential.user.uid).set({ name: userName, email: email });
+    closeLogin();
   } catch (error) {
     console.error('Erro ao registrar usuário:', error.message);
-    alert('Erro ao registrar: ' + error.message); // Exibe o erro para o usuário
+    alert('Erro ao registrar: ' + error.message);
   }
 }
 
-// Função para fazer login com E-mail e Senha (chamada pelo onclick do botão)
 async function signInEmailPassword() {
   const email = document.getElementById('auth-email').value;
   const password = document.getElementById('auth-pass').value;
@@ -85,32 +83,29 @@ async function signInEmailPassword() {
   try {
     const userCredential = await auth.signInWithEmailAndPassword(email, password);
     console.log('Usuário logado com sucesso:', userCredential.user);
-    closeLogin(); // Fecha o overlay após o login bem-sucedido
+    closeLogin();
   } catch (error) {
     console.error('Erro ao fazer login:', error.message);
-    alert('Erro ao fazer login: ' + error.message); // Exibe o erro para o usuário
+    alert('Erro ao fazer login: ' + error.message);
   }
 }
 
-// Função para fazer login com Google (chamada pelo onclick do botão)
 async function signInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   try {
     const result = await auth.signInWithPopup(provider);
     console.log('Logado com Google:', result.user);
-    closeLogin(); // Fecha o overlay após o login bem-sucedido
+    closeLogin();
   } catch (error) {
     console.error('Erro ao fazer login com Google:', error.message);
-    alert('Erro ao fazer login com Google: ' + error.message); // Exibe o erro para o usuário
+    alert('Erro ao fazer login com Google: ' + error.message);
   }
 }
 
-// Função para fazer logout
 async function logoutUser() {
   try {
     await auth.signOut();
     console.log('Usuário deslogado com sucesso!');
-    // A UI será atualizada automaticamente pelo onAuthStateChanged
   } catch (error) {
     console.error('Erro ao fazer logout:', error.message);
     alert('Erro ao fazer logout: ' + error.message);
@@ -122,24 +117,29 @@ async function logoutUser() {
 auth.onAuthStateChanged((user) => {
   if (user) {
     // Usuário está logado
-    authControlsLoggedOut.classList.add('hidden'); // Esconde "Criar conta"
-    authControlsLoggedIn.classList.remove('hidden'); // Mostra "Olá, [email]! Sair"
-
-    // Exibe o email ou displayName
+    authControlsLoggedOut.classList.add('hidden');
+    authControlsLoggedIn.classList.remove('hidden');
     userEmailDisplay.textContent = user.displayName || user.email;
+
+    // Atualiza o botão de navegação para "Logout"
+    authNavButton.textContent = 'Logout';
+    authNavButton.onclick = logoutUser; // Define a ação do botão para logout
 
     console.log('Usuário logado:', user.uid, user.email, user.displayName);
 
   } else {
     // Usuário está deslogado
-    authControlsLoggedOut.classList.remove('hidden'); // Mostra "Criar conta"
-    authControlsLoggedIn.classList.add('hidden'); // Esconde "Olá, [email]! Sair"
+    authControlsLoggedOut.classList.remove('hidden');
+    authControlsLoggedIn.classList.add('hidden');
+
+    // Atualiza o botão de navegação para "Login"
+    authNavButton.textContent = 'Login';
+    authNavButton.onclick = openOverlay; // Define a ação do botão para abrir o overlay de login
 
     console.log('Usuário deslogado');
   }
   // Garante que o overlay de login esteja escondido quando a página carrega ou o estado muda
-  // (a menos que tenha sido explicitamente aberto por openOverlay())
-  if (loginOverlay.style.display !== 'flex') { // Não fechar se já estiver aberto
+  if (loginOverlay.style.display !== 'flex') {
       loginOverlay.style.display = 'none';
   }
 });

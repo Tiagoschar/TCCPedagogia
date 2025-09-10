@@ -47,6 +47,7 @@
         <a href="#faq">Dúvidas</a>
         <a href="#contato">Contato</a>
         <a href="admin.html">Admin</a>
+        <a id="auth-nav-button" class="cta">Login</a>
         <a class="cta" href="#contato" data-scroll="#contato">Agendar</a>
       </div>
     </div>
@@ -241,9 +242,8 @@
   </footer>
 
   <!-- LOGIN/CRIAR CONTA OVERLAY -->
-  <div id="login-overlay" class="hidden"> <!-- Adicionado 'hidden' para esconder por padrão via CSS -->
+  <div id="login-overlay" class="hidden">
     <div id="login-box">
-      <!-- BOTÃO PARA FECHAR O OVERLAY -->
       <button class="close-overlay-btn" onclick="closeLogin()">✖</button>
       <!-- LOGIN FORM -->
       <form id="login-form" class="form">
@@ -261,20 +261,20 @@
       </form>
 
       <!-- CREATE ACCOUNT FORM -->
-      <form id="create-account-form" class="form hidden"> <!-- Começa escondido -->
+      <form id="create-account-form" class="form hidden">
         <h2>Criar Conta</h2>
         <label>Nome completo</label>
         <input id="user-name" type="text" class="input" required>
         <label>Email</label>
-        <input id="user-email-signup" type="email" class="input" required> <!-- ID único para o email de signup -->
+        <input id="user-email-signup" type="email" class="input" required>
         <label>Senha</label>
         <div style="position:relative">
-          <input id="user-pass-signup" type="password" class="input" minlength="6" required> <!-- ID único para a senha de signup -->
+          <input id="user-pass-signup" type="password" class="input" minlength="6" required>
           <span class="toggle-pass" onclick="togglePass('user-pass-signup',this)">👁</span>
         </div>
         <label>Confirmar senha</label>
         <div style="position:relative">
-          <input id="user-pass2-signup" type="password" class="input" minlength="6" required> <!-- ID único para a confirmação de senha -->
+          <input id="user-pass2-signup" type="password" class="input" minlength="6" required>
           <span class="toggle-pass" onclick="togglePass('user-pass2-signup',this)">👁</span>
         </div>
         <button type="submit" class="btn btn-primary" onclick="signUpEmailPassword()">Criar conta</button>
@@ -296,10 +296,10 @@
         el.textContent = "👁";
       }
     }
-
-    // Estas funções serão movidas para firebase.js para melhor organização e acesso às vars do Firebase.
-    // openOverlay(), closeLogin(), showCreate(), showLogin()
   </script>
+
+</body>
+</html>
 
 </body>
 </html>
