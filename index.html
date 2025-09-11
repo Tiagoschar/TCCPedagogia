@@ -15,17 +15,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-   <!-- Firebase SDKs via CDN - Compat Version -->
-   <!-- Usando a versão 12.2.1 que você indicou, mas com URLs de compatibilidade -->
-    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics-compat.js"></script> <!-- Corrigido para compat -->
-    <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-database-compat.js"></script> <!-- Corrigido typo na versão -->
-
-    <!-- Seu próprio script JS, depois dos scripts do Firebase -->
-    <script src="firebase.js"></script>
-
 </head>
 
 <body>
@@ -47,7 +36,7 @@
         <a href="#faq">Dúvidas</a>
         <a href="#contato">Contato</a>
         <a href="admin.html">Admin</a>
-        <a class="cta" onclick="openOverlay()">Login</a>
+        <a id="login-btn" class="cta">Login</a>
         <a class="cta" href="#contato" data-scroll="#contato">Agendar</a>
       </div>
     </div>
@@ -235,7 +224,7 @@
             <a class="btn btn-primary" href="https://wa.me/5511976241930" target="_blank" rel="noopener">WhatsApp</a>
             <!-- Elementos controlados pelo Firebase Auth -->
             <div id="auth-controls-logged-out" class="auth-control-group"> <!-- Visível quando deslogado -->
-              <a class="btn btn-ghost" href="#login" onclick="openOverlay()">Criar conta</a>
+              <a id="create-account-btn" class="btn btn-ghost" href="#login">Criar conta</a>
             </div>
             <div id="auth-controls-logged-in" class="auth-control-group hidden"> <!-- Visível quando logado -->
                 <p>Olá, <span id="user-email-display"></span>!</p>
@@ -306,64 +295,31 @@
   </div>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+   document.getElementById("year").textContent = new Date().getFullYear();
 
-    function togglePass(inputId, el) {
-      const input = document.getElementById(inputId);
-      if (input.type === "password") {
-        input.type = "text";
-        el.textContent = "🕳";
-      } else {
-        input.type = "password";
-        el.textContent = "👁";
-      }
-    }
-
-    function closeLogin() {
-      document.getElementById("login-overlay").style.display = "none";
-    }
-
-    function showCreate() {
-      document.getElementById("login-form").style.display = "none";
-      document.getElementById("create-account-form").style.display = "block";
-    }
-
-    function showLogin() {
-      document.getElementById("create-account-form").style.display = "none";
-      document.getElementById("login-form").style.display = "block";
-    }
-
-    function openOverlay() {
-      document.getElementById("login-overlay").style.display = "flex";
-      showCreate();
-    }
+   function togglePass(inputId, el) {
+     const input = document.getElementById(inputId);
+     if (input.type === "password") {
+       input.type = "text";
+       el.textContent = "🕳";
+     } else {
+       input.type = "password";
+       el.textContent = "👁";
+     }
+   }
   </script>
 
+  <!-- Firebase SDKs via CDN - Compat Version -->
+  <!-- Usando a versão 12.2.1 que você indicou, mas com URLs de compatibilidade -->
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics-compat.js"></script> <!-- Corrigido para compat -->
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-database-compat.js"></script> <!-- Corrigido typo na versão -->
 
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+  <!-- Seu próprio script JS, depois dos scripts do Firebase -->
+  <script src="firebase.js"></script>
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDvMSEl-3Tj5IvC5cs09DY8xZuUve4NyOU",
-    authDomain: "tccneuropsicopedagoga.firebaseapp.com",
-    projectId: "tccneuropsicopedagoga",
-    storageBucket: "tccneuropsicopedagoga.firebasestorage.app",
-    messagingSenderId: "189432898003",
-    appId: "1:189432898003:web:aab9ddd5eba744a6350f26",
-    measurementId: "G-XR0LJT1KB8"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
 </body>
 
 </html>
