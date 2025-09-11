@@ -1,4 +1,4 @@
-// firebase.js (versão ESPERO QUE FUNCIONE)
+// firebase.js (versão CORRIGIDA)
 const firebaseConfig = {
   apiKey: "AIzaSyDvMSEl-3Tj5IvC5cs09DY8xZuUve4NyOU",
   authDomain: "tccneuropsicopedagoga.firebaseapp.com",
@@ -66,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (createAccountForm) {
     createAccountForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      // O evento de click no botão já chama a função,
+      // mas se o usuário pressionar Enter, este listener pega.
       window.signUpEmailPassword();
     });
   }
@@ -73,6 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      // O evento de click no botão já chama a função,
+      // mas se o usuário pressionar Enter, este listener pega.
       window.signInEmailPassword();
     });
   }
@@ -89,42 +93,138 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const signUpButton = document.querySelector('#create-account-form button[type="submit"]');
+    const originalButtonText = signUpButton ? signUpButton.textContent : 'Criar conta';
+
+    if (signUpButton) {
+      signUpButton.disabled = true; // Desabilita o botão
+      signUpButton.textContent = 'Criando...'; // Muda o texto para indicar processamento
+    }
+
     try {
       const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-      // atualiza displayName
+      
+      // Atualiza displayName
       await userCredential.user.updateProfile({ displayName: userName });
-      // opcional: gravar dados no Firestore
+      
+      // Opcional: gravar dados no Firestore (mantido comentado como estava)
       // await db.collection('users').doc(userCredential.user.uid).set({ name: userName, email });
+      
       console.log('Usuário registrado:', userCredential.user.uid);
-      window.closeLogin();
+      window.closeLogin(); // Fecha o overlay
+      alert('Conta criada com sucesso e você já está logado!'); // Feedback positivo
     } catch (error) {
       console.error('Erro ao registrar usuário:', error);
-      alert('Erro ao registrar: ' + (error.message || error));
+      let errorMessage = 'Ocorreu um erro desconhecido ao criar a conta.';
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          errorMessage = 'Este email já está cadastrado. Por favor, tente fazer login ou use outro email.';
+          break;
+        case 'auth/invalid-email':
+          errorMessage = 'O formato do email é inválido. Por favor, verifique e tente novamente.';
+          break;
+        case 'auth/weak-password':
+          errorMessage = 'A senha é muito fraca. Ela deve ter pelo menos 6 caracteres. Por favor, escolha uma senha mais forte.';
+          break;
+        case 'auth/operation-not-allowed':
+          errorMessage = 'A criação de contas com email e senha não está habilitada. Por favor, entre em contato com o administrador do site.';
+          break;
+        default:
+          errorMessage = `Erro ao registrar: ${error.message}`;
+          break;
+      }
+      alert(errorMessage);
+    } finally {
+      // Reabilita o botão e restaura o texto, independentemente do sucesso ou falha
+      if (signUpButton) {
+        signUpButton.disabled = false;
+        signUpButton.textContent = originalButtonText;
+      }
     }
   };
 
   window.signInEmailPassword = async function() {
     const email = document.getElementById('auth-email').value;
     const password = document.getElementById('auth-pass').value;
+
+    const signInButton = document.querySelector('#login-form button[onclick="signInEmailPassword()"]');
+    const originalSignInText = signInButton ? signInButton.textContent : 'Entrar';
+
+    if (signInButton) {
+      signInButton.disabled = true;
+      signInButton.textContent = 'Entrando...';
+    }
+
     try {
       await auth.signInWithEmailAndPassword(email, password);
       console.log('Usuário logado com e-mail/senha');
       window.closeLogin();
+      alert('Login realizado com sucesso!');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      alert('Erro ao fazer login: ' + (error.message || error));
+      let errorMessage = 'Ocorreu um erro desconhecido ao fazer login.';
+      switch (error.code) {
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+          errorMessage = 'Email ou senha inválidos. Por favor, verifique suas credenciais.';
+          break;
+        case 'auth/invalid-email':
+          errorMessage = 'O formato do email é inválido. Por favor, verifique e tente novamente.';
+          break;
+        case 'auth/user-disabled':
+          errorMessage = 'Esta conta foi desativada. Por favor, entre em contato com o suporte.';
+          break;
+        default:
+          errorMessage = `Erro ao fazer login: ${error.message}`;
+          break;
+      }
+      alert(errorMessage);
+    } finally {
+      if (signInButton) {
+        signInButton.disabled = false;
+        signInButton.textContent = originalSignInText;
+      }
     }
   };
 
   window.signInWithGoogle = async function() {
     const provider = new firebase.auth.GoogleAuthProvider();
+    const googleSignInButton = document.querySelector('#login-form button[onclick="signInWithGoogle()"]');
+    const originalGoogleText = googleSignInButton ? googleSignInButton.textContent : 'Entrar com Google';
+
+    if (googleSignInButton) {
+      googleSignInButton.disabled = true;
+      googleSignInButton.textContent = 'Entrando com Google...';
+    }
+
     try {
       await auth.signInWithPopup(provider);
       console.log('Logado com Google');
       window.closeLogin();
+      alert('Login com Google realizado com sucesso!');
     } catch (error) {
       console.error('Erro Google:', error);
-      alert('Erro ao fazer login com Google: ' + (error.message || error));
+      let errorMessage = 'Ocorreu um erro desconhecido ao fazer login com Google.';
+      switch (error.code) {
+        case 'auth/popup-closed-by-user':
+          errorMessage = 'O popup de login foi fechado antes da conclusão. Tente novamente.';
+          break;
+        case 'auth/cancelled-popup-request':
+          errorMessage = 'Outra solicitação de autenticação foi iniciada. Por favor, tente novamente.';
+          break;
+        case 'auth/account-exists-with-different-credential':
+          errorMessage = 'Já existe uma conta com este email, mas usando outro método de login (ex: e-mail/senha). Por favor, faça login com o método original.';
+          break;
+        default:
+          errorMessage = `Erro ao fazer login com Google: ${error.message}`;
+          break;
+      }
+      alert(errorMessage);
+    } finally {
+      if (googleSignInButton) {
+        googleSignInButton.disabled = false;
+        googleSignInButton.textContent = originalGoogleText;
+      }
     }
   };
 
@@ -132,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       await auth.signOut();
       console.log('Usuário deslogado');
+      alert('Você foi desconectado com sucesso!');
       // a UI será atualizada no onAuthStateChanged
     } catch (error) {
       console.error('Erro ao deslogar:', error);
@@ -141,17 +242,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ----- Observador de estado de autenticação -----
   auth.onAuthStateChanged((user) => {
-    if (user) {
-      if (authControlsLoggedOut) authControlsLoggedOut.classList.add('hidden');
-      if (authControlsLoggedIn) authControlsLoggedIn.classList.remove('hidden');
-      if (userEmailDisplay) userEmailDisplay.textContent = user.displayName || user.email;
-      window.closeLogin();
-    } else {
-      if (authControlsLoggedOut) authControlsLoggedOut.classList.remove('hidden');
-      if (authControlsLoggedIn) authControlsLoggedIn.classList.add('hidden');
-      // Se quiser que o overlay abra automaticamente quando logout:
-      // window.openOverlay();
+  if (user) {
+    // aside
+    if (authControlsLoggedOut) authControlsLoggedOut.classList.add('hidden');
+    if (authControlsLoggedIn) authControlsLoggedIn.classList.remove('hidden');
+    if (userEmailDisplay) userEmailDisplay.textContent = user.displayName || user.email;
+
+    // navbar -> muda para "Logout"
+    if (loginBtn) {
+      loginBtn.textContent = "Logout"; // Texto do botão na navbar
+      loginBtn.onclick = async (e) => {
+        e.preventDefault();
+        await window.logoutUser();
+      };
     }
-  });
+
+    // Garante que o overlay de login esteja fechado se o usuário já estiver logado
+    window.closeLogin();
+  } else {
+    // aside
+    if (authControlsLoggedOut) authControlsLoggedOut.classList.remove('hidden');
+    if (authControlsLoggedIn) authControlsLoggedIn.classList.add('hidden');
+
+    // navbar -> volta para "Login"
+    if (loginBtn) {
+      loginBtn.textContent = "Login"; // Texto do botão na navbar
+      loginBtn.onclick = (e) => {
+        e.preventDefault();
+        window.openOverlay();
+        window.showLogin();
+      };
+    }
+  }
+});
+
 
 }); // fim DOMContentLoaded

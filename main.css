@@ -99,6 +99,20 @@ a:hover {
   margin-top: 0;
 }
 
+/* As caixas de login/signup dentro do overlay */
+.login-form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
 /* FORM */
 .form {
   display: grid;
@@ -335,11 +349,13 @@ footer {
   border-top: 1px solid rgba(0, 0, 0, 0.06);
   color: var(--muted);
 }
+
 .foot-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 18px;
 }
+
 .copyright {
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   margin-top: 18px;
@@ -455,9 +471,8 @@ footer {
   display: none !important;
 }
 
-/* Oculta o overlay por padrão (além da classe hidden no HTML) */
 #login-overlay {
-  display: none; /* Muda de 'flex' para 'none' para que comece escondido */
+  display: flex; /* Muda de 'flex' para 'none' para que comece escondido */
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6); /* Corrigido para uma sobreposição mais escura */
@@ -474,7 +489,7 @@ footer {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: var(--muted);
+  color: #fff;
   cursor: pointer;
   transition: color 0.2s ease;
 }
@@ -483,9 +498,9 @@ footer {
   color: var(--text);
 }
 
-/* Garante que o formulário de criação de conta comece escondido */
 #create-account-form {
-  display: none; /* Adicionado para garantir que o formulário de criação começa escondido */
+  display: flex; 
+  flex-direction: column;
 }
 
 
