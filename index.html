@@ -35,6 +35,7 @@
         <a href="#faq">Dúvidas</a>
         <a href="#contato">Contato</a>
         <a href="admin.html">Admin</a>
+        <a class="cta" onclick="openOverlay()">Login</a>
         <a class="cta" href="#contato" data-scroll="#contato">Agendar</a>
       </div>
     </div>
@@ -67,7 +68,7 @@
   <section id="sobre">
     <div class="container split">
       <div class="sobre-foto">
-        <img src="/TCCPedagogia/Assets/Foto.jpg" alt="Foto da profissional" class="foto-perfil" />
+        <img src="Assets/Foto.jpg" alt="Foto da profissional" class="foto-perfil" />
       </div>
       <div>
         <h2>Sobre mim</h2>
@@ -95,17 +96,17 @@
       <h2>Serviços</h2>
       <div class="cards">
         <article class="card">
-          <img src="/TCCPedagogia/Assets/Avaliacao.jpg" alt="Imagem ilustrativa Avaliação" class="card-img" />
+          <img src="Assets/Avaliacao.jpg" alt="Imagem ilustrativa Avaliação" class="card-img" />
           <h3>Avaliação</h3>
           <p>Entrevista inicial + testes + devolutiva com plano individualizado.</p>
         </article>
         <article class="card">
-          <img src="/TCCPedagogia/Assets/leitura.jpg" alt="Imagem ilustrativa Intervenção" class="card-img" />
+          <img src="Assets/leitura.jpg" alt="Imagem ilustrativa Intervenção" class="card-img" />
           <h3>Intervenção</h3>
           <p>Sessões semanais para leitura, escrita, memória e atenção.</p>
         </article>
         <article class="card">
-          <img src="/TCCPedagogia/Assets/acompanhamento.png" alt="Imagem ilustrativa Acompanhamento" class="card-img" />
+          <img src="Assets/acompanhamento.png" alt="Imagem ilustrativa Acompanhamento" class="card-img" />
           <h3>Acompanhamento</h3>
           <p>Relatórios, apoio à família e alinhamento com a escola.</p>
         </article>
@@ -316,6 +317,32 @@
       showCreate();
     }
   </script>
+
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDvMSEl-3Tj5IvC5cs09DY8xZuUve4NyOU",
+    authDomain: "tccneuropsicopedagoga.firebaseapp.com",
+    projectId: "tccneuropsicopedagoga",
+    storageBucket: "tccneuropsicopedagoga.firebasestorage.app",
+    messagingSenderId: "189432898003",
+    appId: "1:189432898003:web:aab9ddd5eba744a6350f26",
+    measurementId: "G-XR0LJT1KB8"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 </body>
 
 </html>

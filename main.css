@@ -34,6 +34,7 @@ a {
   color: var(--brand);
   text-decoration: none;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 a:hover {
   opacity: 0.9;
