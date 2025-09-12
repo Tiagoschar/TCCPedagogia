@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Área Administrativa - Neuropsicopedagogia</title>
-  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="../main.css" />
 </head>
 <body>
   <div class="admin-layout">
@@ -12,10 +12,10 @@
     <aside class="sidebar panel">
       <h2 class="mt-2">Admin</h2>
       <nav class="mt-4">
-        <a href="#dashboard" class="nav-link">🏠 Dashboard</a>
-        <a href="#pacientes" class="nav-link">🧠 Pacientes</a>
-        <a href="#consultas" class="nav-link">📅 Consultas</a>
-        <a href="#configuracoes" class="nav-link">⚙️ Configurações</a>
+        <a href="dashboard.html" class="nav-link">🏠 Dashboard</a>
+        <a href="pacientes.html" class="nav-link">🧠 Pacientes</a>
+        <a href="agenda.html" class="nav-link">📅 Agenda</a>
+        <a href="configs.html" class="nav-link">⚙️ Configurações</a>
       </nav>
     </aside>
 
@@ -24,28 +24,32 @@
       <!-- Tela: Dashboard -->
       <section id="dashboard" class="panel mt-4">
         <h2 class="section-title">Dashboard</h2>
-        <p class="section-sub">Resumo das atividades recentes</p>
+        <p class="section-sub">Resumo rápido das atividades e próximos agendamentos</p>
+
         <div class="grid-3 mt-3">
-          <div class="kpi">
-            <p>Pacientes ativos</p>
+          <div class="kpi panel">
+            <p class="muted">Pacientes ativos</p>
             <b>14</b>
+            <p class="muted mt-2">Última atualização: 2 dias</p>
           </div>
-          <div class="kpi">
-            <p>Consultas esta semana</p>
+          <div class="kpi panel">
+            <p class="muted">Consultas esta semana</p>
             <b>8</b>
+            <p class="muted mt-2">Próxima: 27/09 • 14:00</p>
           </div>
-          <div class="kpi">
-            <p>Novos cadastros</p>
+          <div class="kpi panel">
+            <p class="muted">Novos cadastros</p>
             <b>3</b>
+            <p class="muted mt-2">Último: Maria Oliveira</p>
           </div>
         </div>
       </section>
 
-      <!-- Tela: Pacientes -->
+      <!-- Pacientes -->
       <section id="pacientes" class="panel mt-6">
-        <h2 class="section-title">Pacientes</h2>
-        <p class="section-sub">Gerencie seus pacientes cadastrados</p>
-        <div class="table-responsive">
+        <h2 class="section-title">Pacientes recentes</h2>
+        <p class="section-sub">Últimos cadastrados / acessados</p>
+        <div class="table-responsive mt-2">
           <table class="table">
             <thead>
               <tr>
@@ -73,10 +77,10 @@
         </div>
       </section>
 
-      <!-- Tela: Consultas -->
+      <!-- Consultas -->
       <section id="consultas" class="panel mt-6">
-        <h2 class="section-title">Consultas</h2>
-        <p class="section-sub">Acompanhe e organize sua agenda</p>
+        <h2 class="section-title">Próximas consultas</h2>
+        <p class="section-sub">Agenda rápida</p>
         <ul class="mt-3">
           <li>🗓️ 27/08 - 14h00 - João Silva</li>
           <li>🗓️ 28/08 - 10h30 - Maria Oliveira</li>
@@ -84,24 +88,27 @@
         </ul>
       </section>
 
-      <!-- Tela: Configurações -->
+      <!-- Configurações -->
       <section id="configuracoes" class="panel mt-6">
         <h2 class="section-title">Configurações</h2>
         <p class="section-sub">Informações da profissional</p>
         <form class="form mt-3">
           <label>
             Nome completo:
-            <input type="text" class="input" value="Dra. Ana Paula Mendes" />
+            <input type="text" class="input" value="Dra. Raquel Maciel Reis" />
           </label>
           <label>
             E-mail:
-            <input type="email" class="input" value="ana@exemplo.com" />
+            <input type="email" class="input" value="xzquel@gmail.com" />
           </label>
           <label>
             Telefone:
-            <input type="text" class="input" value="(11) 90000-0000" />
+            <input type="text" class="input" value="(11) 97624-1930" />
           </label>
-          <button class="btn btn-primary mt-2">Salvar alterações</button>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-primary mt-2">Salvar alterações</button>
+            <button type="button" class="btn btn-ghost mt-2">Cancelar</button>
+          </div>
         </form>
       </section>
     </main>
