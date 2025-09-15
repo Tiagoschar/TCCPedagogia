@@ -35,7 +35,7 @@
         <a href="#processo">Funcionamento</a>
         <a href="#faq">Dúvidas</a>
         <a href="#contato">Contato</a>
-        <a href="dashboard.html" class="hidden">Admin</a>
+        <a href="admin/dashboard.html" class="hidden">Admin</a>
         <a id="login-btn" class="cta">Login</a>
         <a class="cta" href="#contato" data-scroll="#contato">Agendar</a>
       </div>
@@ -253,7 +253,7 @@
   </footer>
 
   <!-- LOGIN/CRIAR CONTA OVERLAY -->
-  <div id="login-overlay" class="hidden">
+  <div id="login-overlay" class="">
     <div id="login-box">
       <button class="close-overlay-btn" onclick="closeLogin()">✖</button>
       <!-- LOGIN FORM -->
@@ -272,7 +272,7 @@
       </form>
 
       <!-- CREATE ACCOUNT FORM -->
-      <form id="create-account-form" class="form hidden">
+      <form id="create-account-form" class="form">
         <h2>Criar Conta</h2>
         <label>Nome completo</label>
         <input id="user-name" type="text" class="input" required>
@@ -314,10 +314,10 @@
   <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics-compat.js"></script> <!-- Corrigido para compat -->
-  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-database-compat.js"></script> <!-- Corrigido typo na versão -->
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.2.1/firebase-database-compat.js"></script>
 
-  <!-- Seu próprio script JS, depois dos scripts do Firebase -->
+  <!-- outro script .js -->
   <script src="firebase.js"></script>
 
 </body>

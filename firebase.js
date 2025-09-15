@@ -1,4 +1,4 @@
-// firebase.js (versão CORRIGIDA)
+// Inicialização do Firebase (Certifique-se de usar a versão correta do Firebase)
 const firebaseConfig = {
   apiKey: "AIzaSyDvMSEl-3Tj5IvC5cs09DY8xZuUve4NyOU",
   authDomain: "tccneuropsicopedagoga.firebaseapp.com",
@@ -9,79 +9,85 @@ const firebaseConfig = {
   measurementId: "G-XR0LJT1KB8"
 };
 
-// Inicializa Firebase (compat)
+// Inicializando o Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Espera o DOM pra manipular elementos com segurança
+// Espera o DOM ser carregado
 document.addEventListener('DOMContentLoaded', () => {
-  // referências de elementos (agora certamente existentes)
   const loginOverlay = document.getElementById('login-overlay');
+  const loginBtn = document.getElementById('login-btn');
+  const closeBtn = document.querySelector('.close-overlay-btn');
   const loginForm = document.getElementById('login-form');
   const createAccountForm = document.getElementById('create-account-form');
   const authControlsLoggedOut = document.getElementById('auth-controls-logged-out');
   const authControlsLoggedIn = document.getElementById('auth-controls-logged-in');
   const userEmailDisplay = document.getElementById('user-email-display');
 
-  // ----- FUNÇÕES GLOBAIS (expostas no window) -----
+  // ----- Funções para controlar a exibição do modal -----
+  // Exibir o modal de login
   window.openOverlay = function() {
-    if (!loginOverlay) return;
-    loginOverlay.classList.remove('hidden'); // remove a classe que estava com !important
-    // garante que o formulário de login seja mostrado por padrão
-    window.showLogin();
+    loginOverlay.classList.remove('hidden');
+    window.showLogin(); // Exibe o formulário de login quando o modal abre
   };
 
+  // Fechar o modal de login
   window.closeLogin = function() {
-    if (!loginOverlay) return;
     loginOverlay.classList.add('hidden');
   };
 
+  // Exibir o formulário de criação de conta
   window.showCreate = function() {
-    if (loginForm) loginForm.classList.add('hidden');
-    if (createAccountForm) createAccountForm.classList.remove('hidden');
+    loginForm.classList.add('hidden');
+    createAccountForm.classList.remove('hidden');
   };
 
+  // Exibir o formulário de login
   window.showLogin = function() {
-    if (createAccountForm) createAccountForm.classList.add('hidden');
-    if (loginForm) loginForm.classList.remove('hidden');
+    createAccountForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
   };
 
-  // Botões que ligam o overlay (só se existirem)
-  const loginBtn = document.getElementById('login-btn');                 // nav
-  const createAccountBtn = document.getElementById('create-account-btn'); // aside
-
+  // ----- Adicionando eventos de clique -----
+  // Ao clicar no botão "Login", abrir o modal
   if (loginBtn) {
-    loginBtn.addEventListener('click', (e) => { e.preventDefault(); openOverlay(); showLogin(); });
+    loginBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openOverlay();
+    });
   }
+
+  // Fechar o modal ao clicar no botão de fechar
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeLogin();
+    });
+  }
+
+  // Alternar para o formulário de criar conta
+  const createAccountBtn = document.getElementById('create-account-btn');
   if (createAccountBtn) {
-    createAccountBtn.addEventListener('click', (e) => { e.preventDefault(); openOverlay(); showCreate(); });
-  }
-
-  // botão fechar do overlay (ícone dentro do login-box)
-  const closeBtn = document.querySelector('#login-box .close-overlay-btn');
-  if (closeBtn) closeBtn.addEventListener('click', (e) => { e.preventDefault(); closeLogin(); });
-
-  // impede submit padrão do form de criação (assim podemos usar nossa função)
-  if (createAccountForm) {
-    createAccountForm.addEventListener('submit', (e) => {
+    createAccountBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      // O evento de click no botão já chama a função,
-      // mas se o usuário pressionar Enter, este listener pega.
-      window.signUpEmailPassword();
-    });
-  }
-  // caso o usuário pressione Enter no login-form
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // O evento de click no botão já chama a função,
-      // mas se o usuário pressionar Enter, este listener pega.
-      window.signInEmailPassword();
+      openOverlay();
+      showCreate();
     });
   }
 
-  // ----- Funções de Autenticação (expostas em window para compatibilidade com onclick inline) -----
+  // Alternar para o formulário de login
+  const alreadyHaveAccountBtn = document.getElementById('already-have-account-btn');
+  if (alreadyHaveAccountBtn) {
+    alreadyHaveAccountBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showLogin();
+    });
+  }
+
+  // ----- Funções de autenticação -----
+  
+  // Função para criar conta com e-mail e senha
   window.signUpEmailPassword = async function() {
     const email = document.getElementById('user-email-signup').value;
     const password = document.getElementById('user-pass-signup').value;
@@ -96,38 +102,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const signUpButton = document.querySelector('#create-account-form button[type="submit"]');
     const originalButtonText = signUpButton ? signUpButton.textContent : 'Criar conta';
 
+    // Desabilitar o botão enquanto está criando a conta
     if (signUpButton) {
-      signUpButton.disabled = true; // Desabilita o botão
-      signUpButton.textContent = 'Criando...'; // Muda o texto para indicar processamento
+      signUpButton.disabled = true;
+      signUpButton.textContent = 'Criando...';
     }
 
     try {
       const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-      
-      // Atualiza displayName
+      // Atualizar nome de usuário
       await userCredential.user.updateProfile({ displayName: userName });
-      
-      // Opcional: gravar dados no Firestore (mantido comentado como estava)
-      // await db.collection('users').doc(userCredential.user.uid).set({ name: userName, email });
-      
+
       console.log('Usuário registrado:', userCredential.user.uid);
-      window.closeLogin(); // Fecha o overlay
-      alert('Conta criada com sucesso e você já está logado!'); // Feedback positivo
+      window.closeLogin();
+      alert('Conta criada com sucesso e você já está logado!');
     } catch (error) {
       console.error('Erro ao registrar usuário:', error);
       let errorMessage = 'Ocorreu um erro desconhecido ao criar a conta.';
       switch (error.code) {
         case 'auth/email-already-in-use':
-          errorMessage = 'Este email já está cadastrado. Por favor, tente fazer login ou use outro email.';
+          errorMessage = 'Este email já está cadastrado. Tente fazer login ou use outro email.';
           break;
         case 'auth/invalid-email':
-          errorMessage = 'O formato do email é inválido. Por favor, verifique e tente novamente.';
+          errorMessage = 'O formato do email é inválido.';
           break;
         case 'auth/weak-password':
-          errorMessage = 'A senha é muito fraca. Ela deve ter pelo menos 6 caracteres. Por favor, escolha uma senha mais forte.';
-          break;
-        case 'auth/operation-not-allowed':
-          errorMessage = 'A criação de contas com email e senha não está habilitada. Por favor, entre em contato com o administrador do site.';
+          errorMessage = 'A senha deve ter pelo menos 6 caracteres.';
           break;
         default:
           errorMessage = `Erro ao registrar: ${error.message}`;
@@ -135,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       alert(errorMessage);
     } finally {
-      // Reabilita o botão e restaura o texto, independentemente do sucesso ou falha
       if (signUpButton) {
         signUpButton.disabled = false;
         signUpButton.textContent = originalButtonText;
@@ -143,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Função para login com e-mail e senha
   window.signInEmailPassword = async function() {
     const email = document.getElementById('auth-email').value;
     const password = document.getElementById('auth-pass').value;
@@ -166,13 +166,13 @@ document.addEventListener('DOMContentLoaded', () => {
       switch (error.code) {
         case 'auth/user-not-found':
         case 'auth/wrong-password':
-          errorMessage = 'Email ou senha inválidos. Por favor, verifique suas credenciais.';
+          errorMessage = 'Email ou senha inválidos.';
           break;
         case 'auth/invalid-email':
-          errorMessage = 'O formato do email é inválido. Por favor, verifique e tente novamente.';
+          errorMessage = 'O formato do email é inválido.';
           break;
         case 'auth/user-disabled':
-          errorMessage = 'Esta conta foi desativada. Por favor, entre em contato com o suporte.';
+          errorMessage = 'Esta conta foi desativada.';
           break;
         default:
           errorMessage = `Erro ao fazer login: ${error.message}`;
@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Função para login com Google
   window.signInWithGoogle = async function() {
     const provider = new firebase.auth.GoogleAuthProvider();
     const googleSignInButton = document.querySelector('#login-form button[onclick="signInWithGoogle()"]');
@@ -204,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Login com Google realizado com sucesso!');
     } catch (error) {
       console.error('Erro Google:', error);
-      let errorMessage = 'Ocorreu um erro desconhecido ao fazer login com Google.';
+      let errorMessage = 'Ocorreu um erro ao fazer login com Google.';
       switch (error.code) {
         case 'auth/popup-closed-by-user':
           errorMessage = 'O popup de login foi fechado antes da conclusão. Tente novamente.';
@@ -213,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
           errorMessage = 'Outra solicitação de autenticação foi iniciada. Por favor, tente novamente.';
           break;
         case 'auth/account-exists-with-different-credential':
-          errorMessage = 'Já existe uma conta com este email, mas usando outro método de login (ex: e-mail/senha). Por favor, faça login com o método original.';
+          errorMessage = 'Já existe uma conta com este email, mas usando outro método de login.';
           break;
         default:
           errorMessage = `Erro ao fazer login com Google: ${error.message}`;
@@ -228,53 +229,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Função para logout
   window.logoutUser = async function() {
     try {
       await auth.signOut();
       console.log('Usuário deslogado');
       alert('Você foi desconectado com sucesso!');
-      // a UI será atualizada no onAuthStateChanged
     } catch (error) {
       console.error('Erro ao deslogar:', error);
-      alert('Erro ao fazer logout: ' + (error.message || error));
+      alert('Erro ao fazer logout: ' + error.message);
     }
   };
 
   // ----- Observador de estado de autenticação -----
   auth.onAuthStateChanged((user) => {
-  if (user) {
-    // aside
-    if (authControlsLoggedOut) authControlsLoggedOut.classList.add('hidden');
-    if (authControlsLoggedIn) authControlsLoggedIn.classList.remove('hidden');
-    if (userEmailDisplay) userEmailDisplay.textContent = user.displayName || user.email;
+    if (user) {
+      // Atualiza a interface para mostrar que o usuário está logado
+      if (authControlsLoggedOut) authControlsLoggedOut.classList.add('hidden');
+      if (authControlsLoggedIn) authControlsLoggedIn.classList.remove('hidden');
+      if (userEmailDisplay) userEmailDisplay.textContent = user.displayName || user.email;
 
-    // navbar -> muda para "Logout"
-    if (loginBtn) {
-      loginBtn.textContent = "Logout"; // Texto do botão na navbar
-      loginBtn.onclick = async (e) => {
-        e.preventDefault();
-        await window.logoutUser();
-      };
+      // Atualiza o botão de login/logout
+      if (loginBtn) {
+        loginBtn.textContent = "Logout"; // Texto do botão na navbar
+        loginBtn.onclick = async (e) => {
+          e.preventDefault();
+          await window.logoutUser();
+        };
+      }
+
+      // Fecha o modal de login se o usuário já estiver logado
+      window.closeLogin();
+    } else {
+      // Atualiza a interface para mostrar que o usuário não está logado
+      if (authControlsLoggedOut) authControlsLoggedOut.classList.remove('hidden');
+      if (authControlsLoggedIn) authControlsLoggedIn.classList.add('hidden');
+
+      // Atualiza o botão para "Login"
+      if (loginBtn) {
+        loginBtn.textContent = "Login"; // Texto do botão na navbar
+        loginBtn.onclick = (e) => {
+          e.preventDefault();
+          window.openOverlay();
+          window.showLogin();
+        };
+      }
     }
+  });
 
-    // Garante que o overlay de login esteja fechado se o usuário já estiver logado
-    window.closeLogin();
-  } else {
-    // aside
-    if (authControlsLoggedOut) authControlsLoggedOut.classList.remove('hidden');
-    if (authControlsLoggedIn) authControlsLoggedIn.classList.add('hidden');
-
-    // navbar -> volta para "Login"
-    if (loginBtn) {
-      loginBtn.textContent = "Login"; // Texto do botão na navbar
-      loginBtn.onclick = (e) => {
-        e.preventDefault();
-        window.openOverlay();
-        window.showLogin();
-      };
-    }
-  }
 });
-
-
-}); // fim DOMContentLoaded
